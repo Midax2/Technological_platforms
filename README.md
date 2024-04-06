@@ -7,3 +7,5 @@ Labaratory 2: Students during laboratory classes familiarize themselves with bas
 Laboratory 3: Students during laboratory classes familiarize themselves with the basic mechanisms of handling input-output as well as network communication using sockets.
 
 Laboratory 4: Students during laboratory classes familiarize themselves with the basic mechanisms of mapping objects to tables in a database using the Java Persistence API.
+
+Laboratory 5: Students during laboratory classes familiarize themselves with the basic mechanisms of writing unit tests using the JUnit and Mockito libraries.
