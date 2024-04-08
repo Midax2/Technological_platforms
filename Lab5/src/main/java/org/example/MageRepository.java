@@ -15,13 +15,13 @@ public class MageRepository {
         if (collection.containsKey(name)) {
             return Optional.of(collection.remove(name));
         } else {
-            return Optional.empty();
+            throw new IllegalArgumentException("Object with name " + name + " does not exist.");
         }
     }
 
     public String save(Mage mage) {
         if (collection.containsKey(mage.getName())) {
-            return "bad request";
+            throw new IllegalArgumentException("Object with name " + mage.getName() + " already exists.");
         } else {
             collection.put(mage.getName(), mage);
             return "done";

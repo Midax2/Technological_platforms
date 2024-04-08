@@ -48,6 +48,23 @@ public class MageRepositoryTest {
     }
 
     @Test
+
+    public void testDeleteExistingMage() {
+        // Arrange
+        MageRepository repository = new MageRepository();
+        Mage mage = new Mage();
+        mage.setName("ExistingMage");
+        mage.setLevel(1);
+        repository.save(mage);
+
+        // Act
+        Optional<Mage> result = repository.delete("ExistingMage");
+
+        // Assert
+        assertThat(result).isPresent().contains(mage);
+    }
+
+    @Test
     public void testSaveExistingMage() {
         // Arrange
         MageRepository repository = new MageRepository();
