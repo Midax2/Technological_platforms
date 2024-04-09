@@ -80,6 +80,7 @@ public class Main {
                     Mage mageToDel = entityManager.find(Mage.class, nameMageToDel);
                     if (mageToDel != null) {
                         entityManager.remove(mageToDel);
+                        mageToDel.getTower().getMages().remove(mageToDel);
                     }
                     else {
                         System.out.println("Nie istnieje takiego maga");

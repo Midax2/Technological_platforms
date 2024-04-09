@@ -1,87 +1,80 @@
 package org.example;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import java.util.Optional;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.*;
 
 class MageControllerTest {
-    @Test
-    public void testDeleteNonExistingMage() {
-        MageRepository repositoryMock = Mockito.mock(MageRepository.class);
 
-        MageController controller = new MageController(repositoryMock);
-        String result = controller.delete("NonExistingMage");
+    @Mock
+    private MageRepository repositoryMock;
 
-        assertThat(result).isEqualTo("not found");
+    private MageController controller;
+
+    @BeforeEach
+    public void setUp() {
+        MockitoAnnotations.initMocks(this);
+        controller = new MageController(repositoryMock);
     }
 
     @Test
+    public void testDeleteNonExistingMage() {
+        when(repositoryMock.delete("NonExistingMage")).thenReturn(Optional.empty());
 
+        String result = controller.delete("NonExistingMage");
+
+        assertThat(result).isEqualTo("Not found");
+    }
+
+    @Test
     public void testDeleteExistingMage() {
-        MageRepository repositoryMock = Mockito.mock(MageRepository.class);
-        Mage existingMage = new Mage();
-        existingMage.setName("ExistingMage");
-        existingMage.setLevel(1);
-        Mockito.when(repositoryMock.delete("ExistingMage")).thenReturn(Optional.of(existingMage));
+        Mage existingMage = new Mage("ExistingMage", 1);
+        when(repositoryMock.delete("ExistingMage")).thenReturn(Optional.of(existingMage));
 
-        MageController controller = new MageController(repositoryMock);
         String result = controller.delete("ExistingMage");
 
-        assertThat(result).isEqualTo("done");
+        assertThat(result).isEqualTo("Done");
     }
 
     @Test
     public void testFindNonExistingMage() {
-        MageRepository repositoryMock = Mockito.mock(MageRepository.class);
-        Mockito.when(repositoryMock.find("NonExistingMage")).thenReturn(Optional.empty());
+        when(repositoryMock.find("NonExistingMage")).thenReturn(Optional.empty());
 
-        MageController controller = new MageController(repositoryMock);
         String result = controller.find("NonExistingMage");
 
-        assertThat(result).isEqualTo("not found");
+        assertThat(result).isEqualTo("Not found");
     }
 
     @Test
-
     public void testSaveExistingMage() {
-        MageRepository repositoryMock = Mockito.mock(MageRepository.class);
-        Mage existingMage = new Mage();
-        existingMage.setName("ExistingMage");
-        existingMage.setLevel(1);
-        Mockito.when(repositoryMock.find("ExistingMage")).thenReturn(Optional.of(existingMage));
+        Mage existingMage = new Mage("ExistingMage", 1);
+        when(repositoryMock.find("ExistingMage")).thenReturn(Optional.of(existingMage));
 
-        MageController controller = new MageController(repositoryMock);
         String result = controller.save("ExistingMage", "1");
 
-        assertThat(result).isEqualTo("bad request");
+        assertThat(result).isEqualTo("An object with name ExistingMage already exists.");
     }
 
     @Test
     public void testSaveNewMage() {
-        MageRepository repositoryMock = Mockito.mock(MageRepository.class);
-        Mage newMage = new Mage();
-        newMage.setName("NewMage");
-        newMage.setLevel(1);
-        Mockito.when(repositoryMock.find("NewMage")).thenReturn(Optional.empty());
+        when(repositoryMock.find("NewMage")).thenReturn(Optional.empty());
 
-        MageController controller = new MageController(repositoryMock);
         String result = controller.save("NewMage", "1");
 
-        assertThat(result).isEqualTo("done");
+        assertThat(result).isEqualTo("Done");
     }
 
     @Test
     public void testFindExistingMage() {
-        MageRepository repositoryMock = Mockito.mock(MageRepository.class);
-        Mage existingMage = new Mage();
-        existingMage.setName("ExistingMage");
-        existingMage.setLevel(1);
-        Mockito.when(repositoryMock.find("ExistingMage")).thenReturn(Optional.of(existingMage));
+        Mage existingMage = new Mage("ExistingMage", 1);
+        when(repositoryMock.find("ExistingMage")).thenReturn(Optional.of(existingMage));
 
-        MageController controller = new MageController(repositoryMock);
         String result = controller.find("ExistingMage");
 
         assertThat(result).isEqualTo("Name: ExistingMage, Level: 1");
