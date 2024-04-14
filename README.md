@@ -9,3 +9,5 @@ Laboratory 3: Students during laboratory classes familiarize themselves with the
 Laboratory 4: Students during laboratory classes familiarize themselves with the basic mechanisms of mapping objects to tables in a database using the Java Persistence API.
 
 Laboratory 5: Students during laboratory classes familiarize themselves with the basic mechanisms of writing unit tests using the JUnit and Mockito libraries.
+
+Labaratory 6: Students during laboratory classes familiarize themselves with the basic mechanisms of parallelizing operations on streams using the Stream API. You should implement an application that processes a set of images using a stream pipeline. The application should accept the location of the directory containing the images and the location where the processed images will be saved as command-line arguments.
